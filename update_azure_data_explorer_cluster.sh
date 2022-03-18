@@ -41,8 +41,10 @@ header_auth="Authorization: Bearer ${AZURE_SP_ACCESS_TOKEN}"
 header_content_type="Content-Type: application/json"
 url="https://management.azure.com/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${AZURE_DATA_EXPLORER_RG_NAME}/providers/Microsoft.Kusto/clusters/${AZURE_DATA_EXPLORER_CLUSTER_NAME}?api-version=2020-09-18"
 
-echo "DEBUG: curl -X \"${method}\" -H \"${header_auth}\" -H \"${header_content_type}\" -d \'${AZURE_DATA_EXPLORER_PROPERTIES}\' \"${url}\""
+if [ x${AZURE_REST_API_REQUESTS_ON_BASH_LOG_LEVEL} == xDEBUG ]; then
+    echo "DEBUG: curl -X \"${method}\" -H \"${header_auth}\" -H \"${header_content_type}\" -d \'${AZURE_DATA_EXPLORER_PROPERTIES}\' \"${url}\""
 
+fi
 curl -X "${method}" -H "${header_auth}" -H "${header_content_type}" -d ${AZURE_DATA_EXPLORER_PROPERTIES} "${url}"
 
 if [ `echo -n $?` -ne 0 ]; then

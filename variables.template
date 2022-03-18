@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export AZURE_REST_API_REQUESTS_ON_BASH_LOG_LEVEL="INFO"
 export AZURE_SUBSCRIPTION_ID=""
 export AZURE_SP_APP_ID=""
 export AZURE_SP_PASSWORD=""
