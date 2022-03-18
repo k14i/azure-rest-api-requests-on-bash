@@ -5,6 +5,7 @@ export AZURE_SP_APP_ID=""
 export AZURE_SP_PASSWORD=""
 export AZURE_SP_TENANT=""
 export AZURE_SP_ACCESS_TOKEN=""
-export AZURE_KUSTO_RG_NAME=""
-export AZURE_KUSTO_CLUSTER_NAME=""
+export AZURE_DATA_EXPLORER_RG_NAME=""
+export AZURE_DATA_EXPLORER_CLUSTER_NAME=""
+export AZURE_DATA_EXPLORER_PROPERTIES='{"properties":{"trustedExternalTennants":[{"value":"*"}]}}'
 

@@ -17,13 +17,18 @@ if [ x${AZURE_SUBSCRIPTION_ID} == x ]; then
     exit_status=1
 fi
 
-if [ x${AZURE_KUSTO_RG_NAME} == x ]; then
-    echo "ERROR: Environment variable AZURE_KUSTO_RG_NAME is required."
+if [ x${AZURE_DATA_EXPLORER_RG_NAME} == x ]; then
+    echo "ERROR: Environment variable AZURE_DATA_EXPLORER_RG_NAME is required."
     exit_status=1
 fi
 
-if [ x${AZURE_KUSTO_CLUSTER_NAME} == x ]; then
-    echo "ERROR: Environment variable AZURE_KUSTO_CLUSTER_NAME is required."
+if [ x${AZURE_DATA_EXPLORER_CLUSTER_NAME} == x ]; then
+    echo "ERROR: Environment variable AZURE_DATA_EXPLORER_CLUSTER_NAME is required."
+    exit_status=1
+fi
+
+if [ x${AZURE_DATA_EXPLORER_PROPERTIES} == x ]; then
+    echo "ERROR: Environment variable AZURE_DATA_EXPLORER_CLUSTER_PROPERTIES is required."
     exit_status=1
 fi
 
@@ -34,11 +39,11 @@ fi
 method="PATCH"
 header_auth="Authorization: Bearer ${AZURE_SP_ACCESS_TOKEN}"
 header_content_type="Content-Type: application/json"
-url="https://management.azure.com/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${AZURE_KUSTO_RG_NAME}/providers/Microsoft.Kusto/clusters/${AZURE_KUSTO_CLUSTER_NAME}?api-version=2020-09-18"
+url="https://management.azure.com/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${AZURE_DATA_EXPLORER_RG_NAME}/providers/Microsoft.Kusto/clusters/${AZURE_DATA_EXPLORER_CLUSTER_NAME}?api-version=2020-09-18"
 
-echo "DEBUG: curl -X \"${method}\" -H \"${header_auth}\" -H \"${header_content_type}\" \"${url}\""
+echo "DEBUG: curl -X \"${method}\" -H \"${header_auth}\" -H \"${header_content_type}\" -d \'${AZURE_DATA_EXPLORER_PROPERTIES}\' \"${url}\""
 
-curl -X "${method}" -H "${header_auth}" -H "${header_content_type}" "${url}"
+curl -X "${method}" -H "${header_auth}" -H "${header_content_type}" -d ${AZURE_DATA_EXPLORER_PROPERTIES} "${url}"
 
 if [ `echo -n $?` -ne 0 ]; then
     echo "ERROR: curl returned non-zero status."
